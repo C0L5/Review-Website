@@ -12,6 +12,15 @@
             min-height: 500px;
             border-radius: 12px;
         }
+
+        .brandLogo {
+            height: 80px;
+            width: auto;
+        }
+
+        .card-discover {
+            background-color: #565f6d;
+        }
     </style>
 </head>
 
@@ -34,6 +43,7 @@
             </div>
         </div>
     </section>
+
     <!--Trending and Discover-->
     <section>
         <div class="container-fluid px-5">
@@ -42,33 +52,45 @@
                 <div class="col-md-8">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <p class="mb-0">Trending</p>
-                        <a href="#" class="text-decoration-none">See all</a>
+                        <a href="trending.html" class="text-decoration-none">See all</a>
                     </div>
                     <!--Trending Games Card-->
                     <div class="row">
                         <div class="col">
-                            <div class="card">
-                                <img src="images/ign_ferrari1.png" class="img-fluid">
-                                <div class="card-body">
-                                    <p>TITLE</p>
+                            <a href="#" style="text-decoration: none;">
+                                <div class="card">
+                                    <img src="images/ign_ferrari1.png" class="img-fluid">
+                                    <div class="card-body">
+                                        <p>TITLE</p>
+                                        <p>DATE</p>
+                                        <p>SHORT DESC</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card">
-                                <img src="images/ign_ferrari1.png" class="img-fluid">
-                                <div class="card-body">
-                                    <p>TITLE</p>
+                            <a href="#" style="text-decoration: none;">
+                                <div class="card">
+                                    <img src="images/ign_ferrari1.png" class="img-fluid">
+                                    <div class="card-body">
+                                        <p>TITLE</p>
+                                        <p>DATE</p>
+                                        <p>SHORT DESC</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card">
-                                <img src="images/ign_ferrari1.png" class="img-fluid">
-                                <div class="card-body">
-                                    <p>TITLE</p>
+                            <a href="#" style="text-decoration: none;">
+                                <div class="card">
+                                    <img src="images/ign_ferrari1.png" class="img-fluid">
+                                    <div class="card-body">
+                                        <p>TITLE</p>
+                                        <p>DATE</p>
+                                        <p>SHORT DESC</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -77,25 +99,31 @@
                     <p>Discover</p>
                     <div class="row">
                         <div class="col">
-                            <div class="card">
-                                <img src="images/ign_ferrari1.png" class="img-fluid">
-                            </div>
+                            <a href="#">
+                                <div class="card card-discover">
+                                    <img src="images/playstationLogo.svg" class="img-fluid brandLogo">
+                                </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card">
-                                <img src="images/ign_ferrari1.png" class="img-fluid">
-                            </div>
+                            <a href="#">
+                                <div class="card card-discover">
+                                    <img src="images/nintendoSwitchLogo.svg" class="img-fluid brandLogo">
+                                </div>
+                            </a>
+
                         </div>
                         <div class="col">
-                            <div class="card">
-                                <img src="images/ign_ferrari1.png" class="img-fluid">
-                            </div>
+                            <a href="#">
+                                <div class="card card-discover">
+                                    <img src="images/steamLogo.svg" class="img-fluid brandLogo">
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
 
     <!--The footer-->
