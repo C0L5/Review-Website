@@ -1,7 +1,7 @@
 <?php
 $DB_HOST = "localhost";
-$DB_USER = "root";   // default XAMPP user
-$DB_PASS = "";       // default XAMPP pass
+$DB_USER = "root";  
+$DB_PASS = "";       
 $DB_NAME = "game_review_db";
 $DB_PORT = 3306;
 
