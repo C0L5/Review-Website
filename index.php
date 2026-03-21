@@ -6,25 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
         crossorigin="anonymous">
-    <style>
-        .featuredGame {
-            background: linear-gradient(to right, rgba(10, 15, 25, 0.9), rgba(10, 15, 25, 0.3)), url('images/arcRaidersAlternative.jpg') center/cover no-repeat;
-            min-height: 500px;
-            border-radius: 12px;
-        }
-
-        .brandLogo {
-            height: 80px;
-            width: auto;
-        }
-
-        .card-discover {
-            background-color: #565f6d;
-        }
-    </style>
+    <link rel="stylesheet" href="css/master.css">
 </head>
 
-<body class="d-flex flex-column min-vh-100" style="background-image: linear-gradient(to bottom, #141c2b, #0a0f19); color: white;">
+<body class="d-flex flex-column">
     <!-- Navigation Bar -->
     <?php include 'include/navigationBar.php' ?>
     <!--Featured Game Here-->
@@ -57,7 +42,7 @@
                     <!--Trending Games Card-->
                     <div class="row">
                         <div class="col">
-                            <a href="#" style="text-decoration: none;">
+                            <a href="#">
                                 <div class="card">
                                     <img src="images/ign_ferrari1.png" class="img-fluid">
                                     <div class="card-body">
@@ -69,7 +54,7 @@
                             </a>
                         </div>
                         <div class="col">
-                            <a href="#" style="text-decoration: none;">
+                            <a href="#">
                                 <div class="card">
                                     <img src="images/ign_ferrari1.png" class="img-fluid">
                                     <div class="card-body">
@@ -81,7 +66,7 @@
                             </a>
                         </div>
                         <div class="col">
-                            <a href="#" style="text-decoration: none;">
+                            <a href="#">
                                 <div class="card">
                                     <img src="images/ign_ferrari1.png" class="img-fluid">
                                     <div class="card-body">

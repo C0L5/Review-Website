@@ -1,0 +1,25 @@
+ body{
+    background-image: linear-gradient(to bottom, #141c2b, #0a0f19); 
+    color: white;
+    min-height: 100vh;
+ }
+ 
+a{
+    text-decoration: none;
+    color:#0a0f19;
+}
+ 
+ .featuredGame {
+    background: linear-gradient(to right, rgba(10, 15, 25, 0.9), rgba(10, 15, 25, 0.3)), url('../images/arcRaidersAlternative.jpg') center/cover no-repeat;
+    min-height: 500px;
+    border-radius: 12px;
+}
+
+.brandLogo {
+    height: 80px;
+    width: auto;
+}
+
+.card-discover {
+    background-color: #565f6d;
+}
