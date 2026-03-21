@@ -2,9 +2,9 @@
 session_start();
 include 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $email = $_POST['email'];
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
@@ -13,24 +13,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $result = $stmt->get_result();
 
-    if ($result->num_rows === 1) {
+
+    if ($result && $result->num_rows === 1) {
+
         $user = $result->fetch_assoc();
-        
+
         if (password_verify($password, $user['password_hash'])) {
+
+            session_regenerate_id(true);
 
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
 
-            header("Location: index.php"); 
+            header("Location: index.php");
             exit();
 
         } else {
-            echo "❌ Incorrect password";
+            echo "❌ Incorrect email or password";
         }
 
     } else {
-        echo "❌ User not found";
+        echo "❌ Incorrect email or password";
     }
+
+    $stmt->close();
 }
 ?>

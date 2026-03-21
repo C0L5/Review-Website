@@ -19,26 +19,26 @@
 
             <h3 class="text-center mb-4">Create Account</h3>
 
-            <form>
+            <form action="signup_process.php" method="POST">
 
                 <div class="mb-3">
                     <label class="form-label">Username</label>
-                    <input type="text" class="form-control" placeholder="Enter username" required>
+                    <input type="text" name="username" class="form-control" placeholder="Enter username" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" placeholder="Enter email" required>
+                    <input type="email" name="email" class="form-control" placeholder="Enter email" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" class="form-control" placeholder="Enter password" required>
+                    <input type="password" name="password" class="form-control" placeholder="Enter password" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" placeholder="Confirm password" required>
+                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm password" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">
