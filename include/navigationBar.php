@@ -15,8 +15,8 @@
                  <input class="form-control" type="search" placeholder="Search" name="searchbar" aria-label="Search" />
              </form>
              <div class="d-flex pt-2 pt-lg-0 gap-2">
-                 <button class="btn btn-outline-light">Sign up</button>
-                 <button class="btn btn-light">Login</button>
+                 <a href="signup.php" class="btn btn-outline-light">Sign up</a>
+                 <a href="login.php" class="btn btn-light">Login</a>
              </div>
          </div>
      </div>
