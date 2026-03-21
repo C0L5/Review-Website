@@ -19,15 +19,15 @@
 
             <h3 class="text-center mb-4">Login</h3>
 
-            <form>
+            <form action="login_process.php" method="POST">
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
                 </div>
 
                 <div class="form-check mb-3">

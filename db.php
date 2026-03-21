@@ -1,0 +1,14 @@
+<?php
+$DB_HOST = "localhost";
+$DB_USER = "root";   // default XAMPP user
+$DB_PASS = "";       // default XAMPP pass
+$DB_NAME = "game_review_db";
+$DB_PORT = 3306;
+
+$conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME, $DB_PORT);
+if ($conn->connect_error) {
+    die("DB connection failed: " . $conn->connect_error);
+}
+
+$conn->set_charset('utf8mb4');
+?>
