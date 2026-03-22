@@ -27,16 +27,23 @@ if (session_status() === PHP_SESSION_NONE) {
                 <input class="form-control" type="search" placeholder="Search" name="searchbar" />
             </form>
 
-            <div class="d-flex pt-2 pt-lg-0 gap-2 align-items-center">
+            <div class="d-flex pt-2 pt-lg-0 gap-2">
 
                 <?php if (isset($_SESSION['user_id'])): ?>
-
-                    <span class="text-white me-2">
-                        👤 <?php echo htmlspecialchars($_SESSION['username']); ?>
-                    </span>
-
-                    <a href="profile.php" class="btn btn-outline-light">Profile</a>
-                    <a href="logout.php" class="btn btn-light">Logout</a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="text-white me-2">
+                                👤 <?php echo htmlspecialchars($_SESSION['username']); ?>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg-end mt-md-3">
+                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        </ul>
+                    </div>
 
                 <?php else: ?>
 

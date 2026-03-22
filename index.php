@@ -13,6 +13,7 @@
 <body class="d-flex flex-column">
     <!-- Navigation Bar -->
     <?php include 'include/navigationBar.php' ?>
+
     <!--Featured Game Here-->
     <section class="py-5">
         <div class="container-fluid px-5">
@@ -45,10 +46,10 @@
                         <div class="col">
                             <a href="#">
                                 <div class="card">
-                                    <img src="images/ign_ferrari1.png" class="img-fluid">
-                                    <div class="card-body">
-                                        <p>TITLE</p>
-                                        <p>DATE</p>
+                                    <img src="images/nintendoGames/pokopia.png" class="img-fluid trendingImg">
+                                    <div class=" card-body">
+                                        <h2>Pokopia</h2>
+                                        <p>March 5, 2026</p>
                                         <p>SHORT DESC</p>
                                     </div>
                                 </div>
@@ -57,10 +58,10 @@
                         <div class="col">
                             <a href="#">
                                 <div class="card">
-                                    <img src="images/ign_ferrari1.png" class="img-fluid">
+                                    <img src="images/pcGames/crimsonDesert.jpg" class="img-fluid trendingImg">
                                     <div class="card-body">
-                                        <p>TITLE</p>
-                                        <p>DATE</p>
+                                        <h2>Crimson Desert</h2>
+                                        <p>March 19, 2026</p>
                                         <p>SHORT DESC</p>
                                     </div>
                                 </div>
@@ -69,10 +70,10 @@
                         <div class="col">
                             <a href="#">
                                 <div class="card">
-                                    <img src="images/ign_ferrari1.png" class="img-fluid">
+                                    <img src="images/psGames/ghostOfYotei.jpg" class="img-fluid trendingImg">
                                     <div class="card-body">
-                                        <p>TITLE</p>
-                                        <p>DATE</p>
+                                        <h2>Ghost of Yotei</h2>
+                                        <p>October 2, 2025</p>
                                         <p>SHORT DESC</p>
                                     </div>
                                 </div>
