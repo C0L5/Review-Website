@@ -62,14 +62,29 @@ $user = $result->fetch_assoc();
         </ul>
 
         <!-- Reviews -->
-        <div class="card mb-3 p-3 d-flex flex-row">
-            <img src="game.jpg" width="80" class="me-3">
-            <div>
-                <h5>Game Title</h5>
-                <p>⭐⭐⭐⭐☆</p>
-                <p>Short review preview...</p>
-            </div>
-        </div>
+        <?php
+            $stmt = $conn->prepare("
+                SELECT r.title, r.content, r.rating, g.title AS game_title
+                FROM reviews r
+                JOIN games g ON r.game_id = g.game_id
+                WHERE r.user_id = ?
+                ORDER BY r.created_at DESC
+            ");
+            $stmt->bind_param("i", $_SESSION['user_id']);
+            $stmt->execute();
+            $reviews = $stmt->get_result();
+            ?>
+
+            <?php while ($review = $reviews->fetch_assoc()): ?>
+                <div class="card mb-3 p-3 d-flex flex-row">
+                    <div>
+                        <h5><?php echo htmlspecialchars($review['game_title']); ?></h5>
+                        <strong><?php echo htmlspecialchars($review['title']); ?></strong>
+                        <p>⭐ <?php echo $review['rating']; ?>/10</p>
+                        <p><?php echo htmlspecialchars($review['content']); ?></p>
+                    </div>
+                </div>
+            <?php endwhile; ?>
 
     </div>
 

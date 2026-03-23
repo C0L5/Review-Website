@@ -1,4 +1,47 @@
 <!DOCTYPE html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include 'db.php';
+
+if (!isset($_GET['id'])) {
+    header("Location: index.php");
+    exit();
+}
+
+$game_id = (int)$_GET['id'];
+
+$stmt = $conn->prepare("SELECT * FROM games WHERE game_id = ?");
+$stmt->bind_param("i", $game_id);
+$stmt->execute();
+$game = $stmt->get_result()->fetch_assoc();
+
+if (!$game) {
+    echo "Game not found";
+    exit();
+}
+
+$stmt = $conn->prepare("
+    SELECT r.*, u.username 
+    FROM reviews r
+    JOIN users u ON r.user_id = u.user_id
+    WHERE r.game_id = ?
+    ORDER BY r.created_at DESC
+");
+$stmt->bind_param("i", $game_id);
+$stmt->execute();
+$reviews = $stmt->get_result();
+
+$stmt = $conn->prepare("
+    SELECT AVG(rating) as avg_rating 
+    FROM reviews 
+    WHERE game_id = ?
+");
+$stmt->bind_param("i", $game_id);
+$stmt->execute();
+$avg = $stmt->get_result()->fetch_assoc();
+?>
 <html>
 
 <head>
@@ -9,116 +52,111 @@
     <link rel="stylesheet" href="css/master.css">
 </head>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><?php echo htmlspecialchars($game['title']); ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/master.css">
+</head>
+
 <body class="d-flex flex-column">
-    <!-- Navigation Bar -->
-    <?php include 'include/navigationBar.php' ?>
 
-    <div class="container my-5">
+<?php include 'include/navigationBar.php' ?>
 
-        <!-- GAME HEADER -->
-        <div class="row g-4">
-            <!-- Game Image -->
-            <div class="col-md-4">
-                <img src="images/ign_ferrari1.png"
-                    class="img-fluid rounded shadow-sm"
-                    alt="Game Image">
-            </div>
+<div class="container my-5">
 
-            <!-- Game Info -->
-            <div class="col-md-8">
-                <h2>Game Title</h2>
-
-                <p class="text-muted mb-1">
-                    By <strong>Game Studio / Developer</strong>
-                </p>
-
-                <!-- Rating -->
-                <div class="mb-2">
-                    <span class="star">⭐⭐⭐⭐☆</span>
-                    <span class="text-muted">(4.0 / 5)</span>
-                </div>
-
-                <!-- Description -->
-                <p>
-                    This is a sample description of the game. It explains gameplay, features,
-                    and what makes the game interesting. You can replace this later with
-                    real data from your database.
-                </p>
-            </div>
+    <!-- GAME HEADER -->
+    <div class="row g-4">
+        <div class="col-md-4">
+            <img src="<?php echo htmlspecialchars($game['cover_image']); ?>"
+                class="img-fluid rounded shadow-sm">
         </div>
 
-        <hr class="my-5">
+        <div class="col-md-8">
+            <h2><?php echo htmlspecialchars($game['title']); ?></h2>
 
-        <!-- REVIEWS SECTION -->
-        <div class="row">
-            <div class="col-12">
-                <h4>Reviews</h4>
+            <p class="text-muted mb-1">
+                By <strong><?php echo htmlspecialchars($game['developer']); ?></strong>
+            </p>
 
-                <!-- Review Item -->
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h6 class="mb-1">Username123</h6>
-                        <div class="star mb-2">⭐⭐⭐⭐☆</div>
-                        <p class="mb-0">
-                            Really fun game, enjoyed the mechanics and story!
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Review Item -->
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h6 class="mb-1">Player456</h6>
-                        <div class="star mb-2">⭐⭐⭐☆☆</div>
-                        <p class="mb-0">
-                            It was okay, but could use more content.
-                        </p>
-                    </div>
-                </div>
-
+            <div class="mb-2">
+                ⭐ <?php echo number_format($avg['avg_rating'] ?? 0, 1); ?> / 10
             </div>
+
+            <p>
+                <?php echo htmlspecialchars($game['description']); ?>
+            </p>
         </div>
-
-        <hr class="my-5">
-
-        <!-- ADD REVIEW -->
-        <div class="row">
-            <div class="col-12">
-                <h5>Add a Review</h5>
-
-                <form>
-                    <!-- Rating -->
-                    <div class="mb-3">
-                        <label class="form-label">Rating</label>
-                        <select class="form-select">
-                            <option>⭐</option>
-                            <option>⭐⭐</option>
-                            <option>⭐⭐⭐</option>
-                            <option>⭐⭐⭐⭐</option>
-                            <option>⭐⭐⭐⭐⭐</option>
-                        </select>
-                    </div>
-
-                    <!-- Comment -->
-                    <div class="mb-3">
-                        <label class="form-label">Comment</label>
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        Submit Review
-                    </button>
-                </form>
-            </div>
-        </div>
-
     </div>
 
-    <!--The footer-->
-    <?php include 'include/footer.php' ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous">
-    </script>
+    <hr class="my-5">
+
+    <!-- REVIEWS -->
+    <h4>Reviews</h4>
+
+    <?php if ($reviews->num_rows > 0): ?>
+        <?php while ($r = $reviews->fetch_assoc()): ?>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6><?php echo htmlspecialchars($r['username']); ?></h6>
+
+                    <p>⭐ <?php echo $r['rating']; ?>/10</p>
+
+                    <strong><?php echo htmlspecialchars($r['title']); ?></strong>
+
+                    <p class="mb-0">
+                        <?php echo htmlspecialchars($r['content']); ?>
+                    </p>
+                </div>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>No reviews yet. Be the first!</p>
+    <?php endif; ?>
+
+    <hr class="my-5">
+
+    <!-- ADD REVIEW -->
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <h5>Add a Review</h5>
+
+        <form action="save_review.php" method="POST">
+
+            <input type="hidden" name="game_id" value="<?php echo $game_id; ?>">
+
+            <div class="mb-3">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Rating (0–10)</label>
+                <input type="number" name="rating" min="0" max="10" step="0.1" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Comment</label>
+                <textarea name="content" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Submit Review
+            </button>
+        </form>
+
+    <?php else: ?>
+        <p>
+            <a href="login.php">Login</a> to write a review.
+        </p>
+    <?php endif; ?>
+
+</div>
+
+<?php include 'include/footer.php' ?>
+
 </body>
+</html>
 
 </html>

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<?php session_start(); ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include 'db.php';
+?>
 <html>
 
 <head>
@@ -39,46 +44,98 @@
                 <div class="col-md-8">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <p class="mb-0">Trending</p>
-                        <a href="trending.html" class="text-decoration-none">See all</a>
+
+                        <div>
+                            <a href="trending.html" class="text-decoration-none me-3">See all</a>
+
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                                <a href="add_review.php" class="btn btn-primary btn-sm">+ Add Review</a>
+                            <?php endif; ?>
+                        </div>
                     </div>
                     <!--Trending Games Card-->
+                    <?php
+                    $trending = $conn->query("
+                        SELECT game_id, title, release_date, cover_image 
+                        FROM games 
+                        ORDER BY release_date DESC 
+                        LIMIT 3
+                    ");
+                    ?>
                     <div class="row">
-                        <div class="col">
-                            <a href="#">
-                                <div class="card">
-                                    <img src="images/nintendoGames/pokopia.png" class="img-fluid trendingImg">
-                                    <div class=" card-body">
-                                        <h2>Pokopia</h2>
-                                        <p>March 5, 2026</p>
-                                        <p>SHORT DESC</p>
-                                    </div>
+                        <div class="row">
+                            <?php while ($game = $trending->fetch_assoc()): ?>
+                                <div class="col">
+                                    <a href="games.php?id=<?php echo $game['game_id']; ?>">
+                                        <div class="card h-100">
+                                            
+                                            <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" 
+                                                class="img-fluid trendingImg">
+
+                                            <div class="card-body">
+                                                <h5><?php echo htmlspecialchars($game['title']); ?></h5>
+
+                                                <p>
+                                                    <?php echo date("F j, Y", strtotime($game['release_date'])); ?>
+                                                </p>
+
+                                                <p>Click to view details</p>
+                                            </div>
+
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
+                            <?php endwhile; ?>
                         </div>
-                        <div class="col">
-                            <a href="#">
-                                <div class="card">
-                                    <img src="images/pcGames/crimsonDesert.jpg" class="img-fluid trendingImg">
-                                    <div class="card-body">
-                                        <h2>Crimson Desert</h2>
-                                        <p>March 19, 2026</p>
-                                        <p>SHORT DESC</p>
+                        <div class="row">
+                        <?php while ($game = $trending->fetch_assoc()): ?>
+                            <div class="col">
+                                <a href="games.php?id=<?php echo $game['game_id']; ?>">
+                                    <div class="card h-100">
+                                        
+                                        <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" 
+                                            class="img-fluid trendingImg">
+
+                                        <div class="card-body">
+                                            <h5><?php echo htmlspecialchars($game['title']); ?></h5>
+
+                                            <p>
+                                                <?php echo date("F j, Y", strtotime($game['release_date'])); ?>
+                                            </p>
+
+                                            <p>Click to view details</p>
+                                        </div>
+
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
+                        <?php endwhile; ?>
                         </div>
-                        <div class="col">
-                            <a href="#">
-                                <div class="card">
-                                    <img src="images/psGames/ghostOfYotei.jpg" class="img-fluid trendingImg">
-                                    <div class="card-body">
-                                        <h2>Ghost of Yotei</h2>
-                                        <p>October 2, 2025</p>
-                                        <p>SHORT DESC</p>
+                        <div class="row">
+                        <?php while ($game = $trending->fetch_assoc()): ?>
+                            <div class="col">
+                                <a href="games.php?id=<?php echo $game['game_id']; ?>">
+                                    <div class="card h-100">
+                                        
+                                        <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" 
+                                            class="img-fluid trendingImg">
+
+                                        <div class="card-body">
+                                            <h5><?php echo htmlspecialchars($game['title']); ?></h5>
+
+                                            <p>
+                                                <?php echo date("F j, Y", strtotime($game['release_date'])); ?>
+                                            </p>
+
+                                            <p>Click to view details</p>
+                                        </div>
+
                                     </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+                        
                     </div>
                 </div>
                 <!--Discover Grid-->
