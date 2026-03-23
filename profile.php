@@ -1,10 +1,17 @@
 <?php
 session_start();
+include 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+
+$stmt = $conn->prepare("SELECT username, bio, favorite_genre, profile_picture FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,11 +32,23 @@ if (!isset($_SESSION['user_id'])) {
     <div class="container mt-5" style="max-width: 70vw;">
         <!-- Avatar & Username -->
         <div class="d-flex align-items-center mt-n5 px-3">
-            <img src="images/ign_ferrari1.png" class="rounded-circle border border-white" style="height: 80px; width: 80px; object-fit:cover;">
+            <img 
+                src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . $user['profile_picture'] : 'images/default-avatar.png'; ?>" 
+                class="rounded-circle border border-white" 
+                style="height: 80px; width: 80px; object-fit:cover;"
+            >
+
             <div class="ms-3 px-3">
-                <h4><?php echo htmlspecialchars($_SESSION['username']); ?></h4>
-                <p class="mb-0">Bio Here</p>
-                <p>Genre: RPG</p>
+                <h4><?php echo htmlspecialchars($user['username']); ?></h4>
+
+                <p class="mb-0">
+                    <?php echo !empty($user['bio']) ? htmlspecialchars($user['bio']) : 'No bio yet'; ?>
+                </p>
+
+                <p>
+                    Genre: <?php echo !empty($user['favorite_genre']) ? htmlspecialchars($user['favorite_genre']) : 'Not set'; ?>
+                </p>
+
                 <small>27 Reviews</small>
             </div>
             <div class="ms-auto">

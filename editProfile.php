@@ -1,10 +1,17 @@
 <?php
 session_start();
+include 'db.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+
+$stmt = $conn->prepare("SELECT username, bio, favorite_genre, profile_picture FROM users WHERE user_id = ?");
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,31 +37,36 @@ if (!isset($_SESSION['user_id'])) {
             <div class="mb-3">
                 <label for="avatar" class="form-label">Profile Picture</label>
                 <input class="form-control" type="file" id="avatar" name="avatar" accept="image/*">
-                <img id="avatarPreview" src="avatar.jpg" class="avatar-preview mt-2" alt="Avatar Preview">
+                <img id="avatarPreview" 
+                src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . $user['profile_picture'] : 'images/default-avatar.png'; ?>" 
+                class="avatar-preview mt-2" 
+                alt="Avatar Preview">
             </div>
 
             <!-- Username -->
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username"
-                    value="<?php echo htmlspecialchars($_SESSION['username']); ?>" required>
+                    value="<?php echo htmlspecialchars($user['username']); ?>">
             </div>
 
             <!-- Bio -->
             <div class="mb-3">
                 <label for="bio" class="form-label">Bio</label>
-                <textarea class="form-control" id="bio" name="bio" rows="3">Gamer who loves RPGs and story-driven games.</textarea>
+               <textarea class="form-control" id="bio" name="bio" rows="3"><?php echo htmlspecialchars($user['bio'] ?? ''); ?></textarea>
             </div>
 
             <!-- Favorite Genre -->
             <div class="mb-3">
                 <label for="genre" class="form-label">Favorite Genre</label>
                 <select class="form-select" id="genre" name="favorite_genre">
-                    <option>RPG</option>
-                    <option>FPS</option>
-                    <option>Adventure</option>
-                    <option>Strategy</option>
-                    <option>Simulation</option>
+                    <?php
+                    $genres = ["RPG", "FPS", "Adventure", "Strategy", "Simulation"];
+                    foreach ($genres as $g) {
+                        $selected = ($user['favorite_genre'] === $g) ? "selected" : "";
+                        echo "<option $selected>$g</option>";
+                    }
+                    ?>
                 </select>
             </div>
 
