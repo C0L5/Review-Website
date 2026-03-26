@@ -42,16 +42,6 @@ $stmt->bind_param("i", $game_id);
 $stmt->execute();
 $avg = $stmt->get_result()->fetch_assoc();
 ?>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="css/master.css">
-</head>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,7 +72,12 @@ $avg = $stmt->get_result()->fetch_assoc();
             </p>
 
             <div class="mb-2">
-                ⭐ <?php echo number_format($avg['avg_rating'] ?? 0, 1); ?> / 10
+                 <?php
+                $rating = number_format($avg['avg_rating'] ?? 0, 1);
+                ?>
+                <div class="mb-2">
+                    ⭐ <strong><?php echo $rating; ?></strong> / 10
+                </div> 
             </div>
 
             <p>
@@ -98,19 +93,24 @@ $avg = $stmt->get_result()->fetch_assoc();
 
     <?php if ($reviews->num_rows > 0): ?>
         <?php while ($r = $reviews->fetch_assoc()): ?>
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h6><?php echo htmlspecialchars($r['username']); ?></h6>
-
-                    <p>⭐ <?php echo $r['rating']; ?>/10</p>
-
-                    <strong><?php echo htmlspecialchars($r['title']); ?></strong>
-
-                    <p class="mb-0">
-                        <?php echo htmlspecialchars($r['content']); ?>
-                    </p>
+            <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h6 class="mb-0"><?php echo htmlspecialchars($r['username']); ?></h6>
+                    <small class="text-muted">
+                        <?php echo date("d M Y", strtotime($r['created_at'])); ?>
+                    </small>
                 </div>
+
+                <p class="mt-2 mb-1">⭐ <?php echo $r['rating']; ?>/10</p>
+
+                <strong><?php echo htmlspecialchars($r['title']); ?></strong>
+
+                <p class="mb-0">
+                    <?php echo htmlspecialchars($r['content']); ?>
+                </p>
             </div>
+        </div>
         <?php endwhile; ?>
     <?php else: ?>
         <p>No reviews yet. Be the first!</p>
