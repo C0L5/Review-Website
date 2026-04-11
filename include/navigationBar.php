@@ -31,9 +31,13 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="text-white me-2">
-                                👤 <?php echo htmlspecialchars($_SESSION['username']); ?>
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="text-white">
+                                <img
+                                    src="<?php echo !empty($_SESSION['profile_picture']) ? 'uploads/' . $_SESSION['profile_picture'] : 'images/default-avatar.png'; ?>"
+                                    class="rounded-circle border border-white me-2"
+                                    style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                                <?php echo htmlspecialchars($_SESSION['username']); ?>
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg-end mt-md-3">

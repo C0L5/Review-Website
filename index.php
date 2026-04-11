@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include 'db.php';
 ?>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -46,11 +46,7 @@ include 'db.php';
                         <p class="mb-0">Trending</p>
 
                         <div>
-                            <a href="trending.html" class="text-decoration-none me-3">See all</a>
-
-                            <?php if (isset($_SESSION['user_id'])): ?>
-                                <a href="add_review.php" class="btn btn-primary btn-sm">+ Add Review</a>
-                            <?php endif; ?>
+                            <a href="trending.php" class="text-decoration-none me-3 text-light">See all</a>
                         </div>
                     </div>
                     <!--Trending Games Card-->
@@ -68,8 +64,8 @@ include 'db.php';
                                 <div class="col">
                                     <a href="games.php?id=<?php echo $game['game_id']; ?>">
                                         <div class="card h-100">
-                                            
-                                            <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" 
+
+                                            <img src="<?php echo htmlspecialchars($game['cover_image']); ?>"
                                                 class="img-fluid trendingImg">
 
                                             <div class="card-body">
@@ -88,54 +84,54 @@ include 'db.php';
                             <?php endwhile; ?>
                         </div>
                         <div class="row">
-                        <?php while ($game = $trending->fetch_assoc()): ?>
-                            <div class="col">
-                                <a href="games.php?id=<?php echo $game['game_id']; ?>">
-                                    <div class="card h-100">
-                                        
-                                        <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" 
-                                            class="img-fluid trendingImg">
+                            <?php while ($game = $trending->fetch_assoc()): ?>
+                                <div class="col">
+                                    <a href="games.php?id=<?php echo $game['game_id']; ?>">
+                                        <div class="card h-100">
 
-                                        <div class="card-body">
-                                            <h5><?php echo htmlspecialchars($game['title']); ?></h5>
+                                            <img src="<?php echo htmlspecialchars($game['cover_image']); ?>"
+                                                class="img-fluid trendingImg">
 
-                                            <p>
-                                                <?php echo date("F j, Y", strtotime($game['release_date'])); ?>
-                                            </p>
+                                            <div class="card-body">
+                                                <h5><?php echo htmlspecialchars($game['title']); ?></h5>
 
-                                            <p>Click to view details</p>
+                                                <p>
+                                                    <?php echo date("F j, Y", strtotime($game['release_date'])); ?>
+                                                </p>
+
+                                                <p>Click to view details</p>
+                                            </div>
+
                                         </div>
-
-                                    </div>
-                                </a>
-                            </div>
-                        <?php endwhile; ?>
+                                    </a>
+                                </div>
+                            <?php endwhile; ?>
                         </div>
                         <div class="row">
-                        <?php while ($game = $trending->fetch_assoc()): ?>
-                            <div class="col">
-                                <a href="games.php?id=<?php echo $game['game_id']; ?>">
-                                    <div class="card h-100">
-                                        
-                                        <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" 
-                                            class="img-fluid trendingImg">
+                            <?php while ($game = $trending->fetch_assoc()): ?>
+                                <div class="col">
+                                    <a href="games.php?id=<?php echo $game['game_id']; ?>">
+                                        <div class="card h-100">
 
-                                        <div class="card-body">
-                                            <h5><?php echo htmlspecialchars($game['title']); ?></h5>
+                                            <img src="<?php echo htmlspecialchars($game['cover_image']); ?>"
+                                                class="img-fluid trendingImg">
 
-                                            <p>
-                                                <?php echo date("F j, Y", strtotime($game['release_date'])); ?>
-                                            </p>
+                                            <div class="card-body">
+                                                <h5><?php echo htmlspecialchars($game['title']); ?></h5>
 
-                                            <p>Click to view details</p>
+                                                <p>
+                                                    <?php echo date("F j, Y", strtotime($game['release_date'])); ?>
+                                                </p>
+
+                                                <p>Click to view details</p>
+                                            </div>
+
                                         </div>
+                                    </a>
+                                </div>
+                            <?php endwhile; ?>
+                        </div>
 
-                                    </div>
-                                </a>
-                            </div>
-                        <?php endwhile; ?>
-                    </div>
-                        
                     </div>
                 </div>
                 <!--Discover Grid-->

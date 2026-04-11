@@ -25,18 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['profile_picture'] = $user['profile_picture'];
 
             header("Location: index.php");
             exit();
-
         } else {
             echo "❌ Incorrect email or password";
         }
-
     } else {
         echo "❌ Incorrect email or password";
     }
 
     $stmt->close();
 }
-?>

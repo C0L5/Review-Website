@@ -4,24 +4,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include 'db.php';
+include 'include/gamesBackend.php';
 
-// BUILD QUERY
-$sql = "SELECT game_id, title, cover_image, release_date FROM games WHERE 1=1";
+$model = new GameModel($conn);
 
-// Rating filter
-if (!empty($_GET['rating'])) {
-    $rating = (int) $_GET['rating'];
-    $sql .= " AND rating >= $rating";
-}
+$category = $_GET['category'] ?? null;
+$rating = $_GET['rating'] ?? null;
 
-// Category filter (optional if column exists)
-if (!empty($_GET['category'])) {
-    $category = $conn->real_escape_string($_GET['category']);
-    $sql .= " AND category = '$category'";
-}
-
-// Execute query
-$result = $conn->query($sql);
+$games = $model->getGames($category, $rating);
 ?>
 
 <html>
@@ -67,8 +57,14 @@ $result = $conn->query($sql);
                             <option value="">Any</option>
                             <option value="Action">Action</option>
                             <option value="RPG">RPG</option>
-                            <option value="Shooter">Shooter</option>
+                            <option value="FPS">FPS</option>
                             <option value="Adventure">Adventure</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Open World">Open World</option>
+                            <option value="Racing">Racing</option>
+                            <option value="Simulation">Simulation</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Strategy">Strategy</option>
                         </select>
                     </div>
 
@@ -80,9 +76,9 @@ $result = $conn->query($sql);
             <div class="col-md-9">
                 <div class="row">
 
-                    <?php if ($result && $result->num_rows > 0): ?>
+                    <?php if ($games && $games->num_rows > 0): ?>
 
-                        <?php while ($game = $result->fetch_assoc()): ?>
+                        <?php while ($game = $games->fetch_assoc()): ?>
                             <div class="col-md-3 mb-4">
                                 <div class="card h-100 shadow-sm">
 
@@ -104,12 +100,11 @@ $result = $conn->query($sql);
                                             </p>
 
                                             <!-- Rating -->
-                                            <p class="mb-0 text-warning">
-                                                <?php
-                                                $rating = $game['rating'] ?? 0;
-                                                echo str_repeat("⭐", round($rating));
-                                                ?>
-                                            </p>
+                                            <div class="mb-2">
+                                                <div class="mb-2">
+                                                    ⭐ <strong><?php echo number_format($game['avg_rating'] ?? 0, 1); ?></strong> / 5
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </a>
