@@ -1,17 +1,18 @@
 <?php
 session_start();
 include 'db.php';
+require_once 'include/userProfile.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$stmt = $conn->prepare("SELECT username, bio, favorite_genre, profile_picture FROM users WHERE user_id = ?");
-$stmt->bind_param("i", $_SESSION['user_id']);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+$user_id = $_SESSION['user_id'];
+$reviewObj = new ReviewObj($conn);
+
+$user = $reviewObj->getUserData($user_id);
+$reviews = $reviewObj->getUserReviews($user_id);
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,11 +33,10 @@ $user = $result->fetch_assoc();
     <div class="container mt-5" style="max-width: 70vw;">
         <!-- Avatar & Username -->
         <div class="d-flex align-items-center mt-n5 px-3">
-            <img 
-                src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . $user['profile_picture'] : 'images/default-avatar.png'; ?>" 
-                class="rounded-circle border border-white" 
-                style="height: 80px; width: 80px; object-fit:cover;"
-            >
+            <img
+                src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . $user['profile_picture'] : 'images/default-avatar.png'; ?>"
+                class="rounded-circle border border-white"
+                style="height: 80px; width: 80px; object-fit:cover;">
 
             <div class="ms-3 px-3">
                 <h4><?php echo htmlspecialchars($user['username']); ?></h4>
@@ -49,7 +49,7 @@ $user = $result->fetch_assoc();
                     Genre: <?php echo !empty($user['favorite_genre']) ? htmlspecialchars($user['favorite_genre']) : 'Not set'; ?>
                 </p>
 
-                <small>27 Reviews</small>
+                <p><?php echo $reviews->num_rows; ?> Reviews</p>
             </div>
             <div class="ms-auto">
                 <a href="editProfile.php" class="text-white">Edit Profile</a>
@@ -62,29 +62,16 @@ $user = $result->fetch_assoc();
         </ul>
 
         <!-- Reviews -->
-        <?php
-            $stmt = $conn->prepare("
-                SELECT r.title, r.content, r.rating, g.title AS game_title
-                FROM reviews r
-                JOIN games g ON r.game_id = g.game_id
-                WHERE r.user_id = ?
-                ORDER BY r.created_at DESC
-            ");
-            $stmt->bind_param("i", $_SESSION['user_id']);
-            $stmt->execute();
-            $reviews = $stmt->get_result();
-            ?>
-
-            <?php while ($review = $reviews->fetch_assoc()): ?>
-                <div class="card mb-3 p-3 d-flex flex-row">
-                    <div>
-                        <h5><?php echo htmlspecialchars($review['game_title']); ?></h5>
-                        <strong><?php echo htmlspecialchars($review['title']); ?></strong>
-                        <p>⭐ <?php echo $review['rating']; ?>/10</p>
-                        <p><?php echo htmlspecialchars($review['content']); ?></p>
-                    </div>
+        <?php while ($review = $reviews->fetch_assoc()): ?>
+            <div class="card mb-3 p-3 d-flex flex-row">
+                <div>
+                    <h5><?php echo htmlspecialchars($review['game_title']); ?></h5>
+                    <strong><?php echo htmlspecialchars($review['title']); ?></strong>
+                    <p>⭐ <?php echo $review['rating']; ?>/10</p>
+                    <p><?php echo htmlspecialchars($review['content']); ?></p>
                 </div>
-            <?php endwhile; ?>
+            </div>
+        <?php endwhile; ?>
 
     </div>
 

@@ -37,10 +37,10 @@ $user = $result->fetch_assoc();
             <div class="mb-3">
                 <label for="avatar" class="form-label">Profile Picture</label>
                 <input class="form-control" type="file" id="avatar" name="avatar" accept="image/*">
-                <img id="avatarPreview" 
-                src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . $user['profile_picture'] : 'images/default-avatar.png'; ?>" 
-                class="avatar-preview mt-2" 
-                alt="Avatar Preview">
+                <img id="avatarPreview"
+                    src="<?php echo !empty($user['profile_picture']) ? 'uploads/' . $user['profile_picture'] : 'images/default-avatar.png'; ?>"
+                    class="img-fluid mt-2"
+                    alt="Avatar Preview">
             </div>
 
             <!-- Username -->
@@ -53,7 +53,7 @@ $user = $result->fetch_assoc();
             <!-- Bio -->
             <div class="mb-3">
                 <label for="bio" class="form-label">Bio</label>
-               <textarea class="form-control" id="bio" name="bio" rows="3"><?php echo htmlspecialchars($user['bio'] ?? ''); ?></textarea>
+                <textarea class="form-control" id="bio" name="bio" rows="3"><?php echo htmlspecialchars($user['bio'] ?? ''); ?></textarea>
             </div>
 
             <!-- Favorite Genre -->

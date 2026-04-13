@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <div class="navbar-nav" style="font-size: 1.2rem;">
                 <a class="nav-link" href="index.php">Home</a>
                 <a class="nav-link" href="reviews.php">Reviews</a>
-                <a class="nav-link" href="recommendations.php">Recommendations</a>
+                <a class="nav-link" href="upcomingGames.php">Upcoming Games</a>
             </div>
 
             <form class="d-flex px-lg-4 flex-grow-1" role="search">
