@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/03/2026 às 08:59
+-- Tempo de geração: 14/04/2026 às 02:50
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -49,26 +49,27 @@ CREATE TABLE `games` (
   `developer` varchar(100) DEFAULT NULL,
   `publisher` varchar(100) DEFAULT NULL,
   `cover_image` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `igdb_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `games`
 --
 
-INSERT INTO `games` (`game_id`, `title`, `description`, `release_date`, `developer`, `publisher`, `cover_image`, `created_at`) VALUES
-(1, 'Pokopia', 'A colorful adventure game with exploration and puzzles.', '2026-03-05', 'Indie Studio', 'Indie Studio', 'images/nintendoGames/pokopia.png', '2026-03-23 07:56:56'),
-(2, 'Crimson Desert', 'An open-world action RPG with stunning visuals.', '2026-03-19', 'Pearl Abyss', 'Pearl Abyss', 'images/pcGames/crimsonDesert.jpg', '2026-03-23 07:56:56'),
-(3, 'Ghost of Yotei', 'A samurai story-driven action game.', '2025-10-02', 'Sucker Punch', 'Sony', 'images/psGames/ghostOfYotei.jpg', '2026-03-23 07:56:56'),
-(4, 'Elden Ring', 'A dark fantasy open-world RPG.', '2022-02-25', 'FromSoftware', 'Bandai Namco', 'images/games/eldenring.jpg', '2026-03-23 07:56:56'),
-(5, 'Cyberpunk 2077', 'Futuristic open-world RPG.', '2020-12-10', 'CD Projekt Red', 'CD Projekt', 'images/games/cyberpunk.jpg', '2026-03-23 07:56:56'),
-(6, 'The Witcher 3', 'Story-driven RPG with rich world.', '2015-05-19', 'CD Projekt Red', 'CD Projekt', 'images/games/witcher3.jpg', '2026-03-23 07:56:56'),
-(7, 'Call of Duty: Warzone', 'Battle royale FPS game.', '2020-03-10', 'Infinity Ward', 'Activision', 'images/games/warzone.jpg', '2026-03-23 07:56:56'),
-(8, 'FIFA 25', 'Football simulation game.', '2025-09-27', 'EA Sports', 'EA', 'images/games/fifa25.jpg', '2026-03-23 07:56:56'),
-(9, 'Forza Horizon 5', 'Open-world racing game.', '2021-11-09', 'Playground Games', 'Xbox Game Studios', 'images/games/forza5.jpg', '2026-03-23 07:56:56'),
-(10, 'Resident Evil 4 Remake', 'Survival horror remake.', '2023-03-24', 'Capcom', 'Capcom', 'images/games/re4.jpg', '2026-03-23 07:56:56'),
-(11, 'Minecraft', 'Sandbox building and survival game.', '2011-11-18', 'Mojang', 'Mojang', 'images/games/minecraft.jpg', '2026-03-23 07:56:56'),
-(12, 'Grand Theft Auto V', 'Open-world crime game.', '2013-09-17', 'Rockstar Games', 'Rockstar Games', 'images/games/gta5.jpg', '2026-03-23 07:56:56');
+INSERT INTO `games` (`game_id`, `title`, `description`, `release_date`, `developer`, `publisher`, `cover_image`, `created_at`, `igdb_id`) VALUES
+(1, 'Pokopia', 'A colorful adventure game with exploration and puzzles.', '2026-03-20', 'Indie Studio', 'Indie Studio', 'images/nintendoGames/pokopia.png', '2026-03-23 07:56:56', 366893),
+(2, 'Crimson Desert', 'An open-world action RPG with stunning visuals.', '2026-03-19', 'Pearl Abyss', 'Pearl Abyss', 'images/pcGames/crimsonDesert.jpg', '2026-03-23 07:56:56', 125633),
+(3, 'Ghost of Yotei', 'A samurai story-driven action game.', '2025-10-02', 'Sucker Punch', 'Sony', 'images/psGames/ghostOfYotei.jpg', '2026-03-23 07:56:56', 317627),
+(4, 'Elden Ring', 'A dark fantasy open-world RPG.', '2022-02-25', 'FromSoftware', 'Bandai Namco', 'images/pcGames/eldenRing.jpg', '2026-03-23 07:56:56', 325591),
+(5, 'Cyberpunk 2077', 'Futuristic open-world RPG.', '2020-12-10', 'CD Projekt Red', 'CD Projekt', 'images/pcGames/cyberpunk.jpg', '2026-03-23 07:56:56', 277807),
+(6, 'The Witcher 3', 'Story-driven RPG with rich world.', '2015-05-19', 'CD Projekt Red', 'CD Projekt', 'images/pcGames/witcher3.jpeg', '2026-03-23 07:56:56', 141472),
+(7, 'Call of Duty: Warzone', 'Battle royale FPS game.', '2020-03-10', 'Infinity Ward', 'Activision', 'images/pcGames/codWarzone.jpg', '2026-03-23 07:56:56', 217815),
+(8, 'FIFA 25', 'Football simulation game.', '2025-09-27', 'EA Sports', 'EA', 'images/psgames/fifa25.jpg', '2026-03-23 07:56:56', 308698),
+(9, 'Forza Horizon 5', 'Open-world racing game.', '2021-11-09', 'Playground Games', 'Xbox Game Studios', 'images/psgames/forza5.jpg', '2026-03-23 07:56:56', 171270),
+(10, 'Resident Evil 4', 'Survival horror remake.', '2023-03-24', 'Capcom', 'Capcom', 'images/psgames/residentEvil4.png', '2026-03-23 07:56:56', 145201),
+(11, 'Minecraft', 'Sandbox building and survival game.', '2011-11-18', 'Mojang', 'Mojang', 'images/pcGames/minecraft.jpg', '2026-03-23 07:56:56', 135400),
+(12, 'Grand Theft Auto V', 'Open-world crime game.', '2013-09-17', 'Rockstar Games', 'Rockstar Games', 'images/pcGames/gtaV.jpg', '2026-03-23 07:56:56', 239064);
 
 -- --------------------------------------------------------
 
@@ -263,7 +264,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `email`, `password_hash`, `profile_picture`, `bio`, `favorite_genre`, `created_at`) VALUES
 (1, 'testuser', 'test@example.com', '123', NULL, 'This is a test user', NULL, '2026-03-21 02:54:58'),
 (4, 'testuser5', 'test1@test.com', '$2y$10$54H/ghAhfjjYIvq8cgqC4OS3UWCbuxtEWXrfpVueX0A5Nhu0WGUyK', '1774248968_126472.png', 'Test 5', 'Strategy', '2026-03-21 06:32:51'),
-(5, 'medalofmine', 'medal@gmail.com', '$2y$10$/OobkFHOfTy5e5TxFdlKGeu0GGGibEAzE90InxHbTMxyQyHzb.mWi', NULL, NULL, NULL, '2026-03-21 06:37:51');
+(5, 'medalofmine', 'medal@gmail.com', '$2y$10$/OobkFHOfTy5e5TxFdlKGeu0GGGibEAzE90InxHbTMxyQyHzb.mWi', NULL, 'afonso', 'Simulation', '2026-03-21 06:37:51');
 
 -- --------------------------------------------------------
 
@@ -390,13 +391,13 @@ ALTER TABLE `platforms`
 -- AUTO_INCREMENT de tabela `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para tabelas despejadas
