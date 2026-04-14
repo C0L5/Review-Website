@@ -25,7 +25,6 @@ $isUpcomingApiGame = false;
 $igdb = new IgdbApi();
 
 if ($source === 'api') {
-    $apiGame = getIgdbGameById($gameId);
     $apiGame = $igdb->getGameById($gameId);
 
     if (!$apiGame) {
@@ -92,7 +91,6 @@ if ($source === 'api') {
         'genres' => $genres,
         'screenshots' => $screenshots
     ];
-
 } else {
     $dbGame = $model->getGameById($gameId);
 
@@ -105,7 +103,6 @@ if ($source === 'api') {
 
     $apiGame = null;
     if (!empty($dbGame['igdb_id'])) {
-        $apiGame = getIgdbGameById($dbGame['igdb_id']);
         $apiGame = $igdb->getGameById($dbGame['igdb_id']);
     }
 
@@ -204,147 +201,148 @@ if ($source === 'api') {
 
 <body class="d-flex flex-column">
 
-<?php include 'include/navigationBar.php' ?>
+    <?php include 'include/navigationBar.php' ?>
 
-<div class="container my-5">
-    <div class="row g-4">
-        <div class="col-md-4">
-            <?php if (!empty($game['cover_image'])): ?>
-                <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" class="img-fluid rounded shadow-sm" alt="<?php echo htmlspecialchars($game['title']); ?>">
-            <?php else: ?>
-                <div class="bg-secondary text-white p-5 rounded text-center">No image available</div>
-            <?php endif; ?>
+    <div class="container my-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <?php if (!empty($game['cover_image'])): ?>
+                    <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" class="img-fluid rounded shadow-sm" alt="<?php echo htmlspecialchars($game['title']); ?>">
+                <?php else: ?>
+                    <div class="bg-secondary text-white p-5 rounded text-center">No image available</div>
+                <?php endif; ?>
+            </div>
+
+            <div class="col-md-8">
+                <h2><?php echo htmlspecialchars($game['title']); ?></h2>
+
+                <p><strong>Developer:</strong> <?php echo htmlspecialchars($game['developer']); ?></p>
+                <p><strong>Publisher:</strong> <?php echo htmlspecialchars($game['publisher']); ?></p>
+                <p><strong>Release Date:</strong> <?php echo htmlspecialchars($game['release_date']); ?></p>
+
+                <?php if (!empty($game['genres'])): ?>
+                    <p><strong>Genres:</strong> <?php echo htmlspecialchars(implode(', ', $game['genres'])); ?></p>
+                <?php endif; ?>
+
+                <?php if (!empty($game['platforms'])): ?>
+                    <p><strong>Platforms:</strong> <?php echo htmlspecialchars(implode(', ', $game['platforms'])); ?></p>
+                <?php endif; ?>
+
+                <?php if ($source !== 'api'): ?>
+                    <div class="mb-3">
+                        ⭐ <strong><?php echo number_format((float)$avgRating, 1); ?></strong> / 5
+                    </div>
+                <?php endif; ?>
+
+                <p><?php echo htmlspecialchars($game['description']); ?></p>
+
+                <?php if (!empty($game['storyline'])): ?>
+                    <h5 class="mt-4">Storyline</h5>
+                    <p><?php echo htmlspecialchars($game['storyline']); ?></p>
+                <?php endif; ?>
+            </div>
         </div>
 
-        <div class="col-md-8">
-            <h2><?php echo htmlspecialchars($game['title']); ?></h2>
+        <?php if (!empty($game['screenshots'])): ?>
+            <hr class="my-5">
+            <h4 class="mb-4">Screenshots</h4>
+            <div class="row">
+                <?php foreach ($game['screenshots'] as $shot): ?>
+                    <div class="col-md-4 mb-4">
+                        <img src="<?php echo htmlspecialchars($shot); ?>" class="img-fluid rounded shadow-sm" alt="Screenshot">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
-            <p><strong>Developer:</strong> <?php echo htmlspecialchars($game['developer']); ?></p>
-            <p><strong>Publisher:</strong> <?php echo htmlspecialchars($game['publisher']); ?></p>
-            <p><strong>Release Date:</strong> <?php echo htmlspecialchars($game['release_date']); ?></p>
+        <?php if ($source !== 'api'): ?>
+            <hr class="my-5">
+            <h4>Reviews</h4>
 
-            <?php if (!empty($game['genres'])): ?>
-                <p><strong>Genres:</strong> <?php echo htmlspecialchars(implode(', ', $game['genres'])); ?></p>
-            <?php endif; ?>
+            <?php if ($reviews && $reviews->num_rows > 0): ?>
+                <?php while ($r = $reviews->fetch_assoc()): ?>
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-0"><?php echo htmlspecialchars($r['username']); ?></h6>
+                                    <small class="text-muted">
+                                        <?php echo date("d M Y", strtotime($r['created_at'])); ?>
+                                    </small>
+                                </div>
 
-            <?php if (!empty($game['platforms'])): ?>
-                <p><strong>Platforms:</strong> <?php echo htmlspecialchars(implode(', ', $game['platforms'])); ?></p>
-            <?php endif; ?>
+                                <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $r['user_id']): ?>
+                                    <div class="d-flex gap-2">
+                                        <a href="edit_review.php?id=<?php echo $r['review_id']; ?>&game_id=<?php echo $gameId; ?>"
+                                            class="btn btn-sm btn-outline-primary">
+                                            Edit
+                                        </a>
 
-            <?php if ($source !== 'api'): ?>
-                <div class="mb-3">
-                    ⭐ <strong><?php echo number_format((float)$avgRating, 1); ?></strong> / 5
-                </div>
-            <?php endif; ?>
-
-            <p><?php echo htmlspecialchars($game['description']); ?></p>
-
-            <?php if (!empty($game['storyline'])): ?>
-                <h5 class="mt-4">Storyline</h5>
-                <p><?php echo htmlspecialchars($game['storyline']); ?></p>
-            <?php endif; ?>
-        </div>
-    </div>
-
-    <?php if (!empty($game['screenshots'])): ?>
-        <hr class="my-5">
-        <h4 class="mb-4">Screenshots</h4>
-        <div class="row">
-            <?php foreach ($game['screenshots'] as $shot): ?>
-                <div class="col-md-4 mb-4">
-                    <img src="<?php echo htmlspecialchars($shot); ?>" class="img-fluid rounded shadow-sm" alt="Screenshot">
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-
-    <?php if ($source !== 'api'): ?>
-        <hr class="my-5">
-        <h4>Reviews</h4>
-
-        <?php if ($reviews && $reviews->num_rows > 0): ?>
-            <?php while ($r = $reviews->fetch_assoc()): ?>
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-0"><?php echo htmlspecialchars($r['username']); ?></h6>
-                                <small class="text-muted">
-                                    <?php echo date("d M Y", strtotime($r['created_at'])); ?>
-                                </small>
+                                        <form action="delete_review.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                            <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
+                                            <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
-                            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $r['user_id']): ?>
-                                <div class="d-flex gap-2">
-                                    <a href="edit_review.php?id=<?php echo $r['review_id']; ?>&game_id=<?php echo $gameId; ?>"
-                                       class="btn btn-sm btn-outline-primary">
-                                        Edit
-                                    </a>
-
-                                    <form action="delete_review.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
-                                        <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
-                                        <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                    </form>
-                                </div>
-                            <?php endif; ?>
+                            <p class="mt-2 mb-1">⭐ <?php echo $r['rating']; ?> / 5</p>
+                            <strong><?php echo htmlspecialchars($r['title']); ?></strong>
+                            <p class="mb-0"><?php echo htmlspecialchars($r['content']); ?></p>
                         </div>
-
-                        <p class="mt-2 mb-1">⭐ <?php echo $r['rating']; ?> / 5</p>
-                        <strong><?php echo htmlspecialchars($r['title']); ?></strong>
-                        <p class="mb-0"><?php echo htmlspecialchars($r['content']); ?></p>
                     </div>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>No reviews yet. Be the first!</p>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No reviews yet. Be the first!</p>
+            <?php endif; ?>
         <?php endif; ?>
-    <?php endif; ?>
 
-    <?php if ($source !== 'api' && isset($_SESSION['user_id'])): ?>
-        <hr class="my-5">
+        <?php if ($source !== 'api' && isset($_SESSION['user_id'])): ?>
+            <hr class="my-5">
 
-        <h5>Add a Review</h5>
+            <h5>Add a Review</h5>
 
-        <form action="save_review.php" method="POST">
-            <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($gameId); ?>">
+            <form action="save_review.php" method="POST">
+                <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($gameId); ?>">
 
-            <div class="mb-3">
-                <label>Title</label>
-                <input type="text" name="title" class="form-control" required>
+                <div class="mb-3">
+                    <label>Title</label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Rating</label>
+                    <select name="rating" class="form-control" required>
+                        <option value="">Select rating</option>
+                        <option value="1">1 ⭐</option>
+                        <option value="2">2 ⭐⭐</option>
+                        <option value="3">3 ⭐⭐⭐</option>
+                        <option value="4">4 ⭐⭐⭐⭐</option>
+                        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Comment</label>
+                    <textarea name="content" class="form-control" rows="3" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Submit Review
+                </button>
+            </form>
+        <?php elseif ($source === 'api' && $isUpcomingApiGame): ?>
+            <hr class="my-5">
+            <div class="alert alert-info">
+                This game has not been released yet, so reviews are not available.
             </div>
+        <?php endif; ?>
 
-            <div class="mb-3">
-                <label>Rating</label>
-                <select name="rating" class="form-control" required>
-                    <option value="">Select rating</option>
-                    <option value="1">1 ⭐</option>
-                    <option value="2">2 ⭐⭐</option>
-                    <option value="3">3 ⭐⭐⭐</option>
-                    <option value="4">4 ⭐⭐⭐⭐</option>
-                    <option value="5">5 ⭐⭐⭐⭐⭐</option>
-                </select>
-            </div>
+    </div>
 
-            <div class="mb-3">
-                <label>Comment</label>
-                <textarea name="content" class="form-control" rows="3" required></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-                Submit Review
-            </button>
-        </form>
-    <?php elseif ($source === 'api' && $isUpcomingApiGame): ?>
-        <hr class="my-5">
-        <div class="alert alert-info">
-            This game has not been released yet, so reviews are not available.
-        </div>
-    <?php endif; ?>
-
-</div>
-
-<?php include 'include/footer.php' ?>
+    <?php include 'include/footer.php' ?>
 
 </body>
+
 </html>
