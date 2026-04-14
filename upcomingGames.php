@@ -27,33 +27,34 @@
         crossorigin="anonymous">
     </script>
     <script>
-    async function loadGames() {
-        const container = document.getElementById('games');
+        async function loadGames() {
+            const container = document.getElementById('games');
 
             container.innerHTML = `<div class="text-center my-4">
                                 <div class="spinner-border" role="status"></div>
                                 <p>Loading games...</p>
                             </div>`;
 
-             try {
-            const res = await fetch('include/upcomingGamesAPI.php');
-            const games = await res.json();
+            try {
+                const res = await fetch('include/upcomingGamesAPI.php');
+                const games = await res.json();
+                console.log(games);
 
-            container.innerHTML = '';
+                container.innerHTML = '';
 
-            games.forEach(game => {
-                const col = document.createElement('div');
-                col.className = 'col-md-3 mb-4';
+                games.forEach(game => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-3 mb-4';
 
-                const image = game.cover
-                    ? "https:" + game.cover.url.replace('t_thumb', 't_cover_big')
-                    : '';
+                    const image = game.cover ?
+                        "https:" + game.cover.url.replace('t_thumb', 't_cover_big') :
+                        '';
 
-                const date = game.first_release_date
-                    ? new Date(game.first_release_date * 1000).toLocaleDateString('en-AU')
-                    : 'TBA';
+                    const date = game.first_release_date ?
+                        new Date(game.first_release_date * 1000).toLocaleDateString('en-AU') :
+                        'TBA';
 
-                col.innerHTML = `
+                    col.innerHTML = `
                     <div class="card h-100 shadow-sm">
                         <a href="games.php?id=${game.id}&source=api" class="text-decoration-none text-dark">
                             ${image ? `<img src="${image}" class="card-img-top" alt="${game.name}">` : ''}
@@ -65,13 +66,13 @@
                     </div>
                 `;
 
-                container.appendChild(col);
-            });
+                    container.appendChild(col);
+                });
 
-        } catch (err) {
-            container.innerHTML = '<p style="color:red;">Failed to load games.</p>';
-            console.error(err);
-        }
+            } catch (err) {
+                container.innerHTML = '<p style="color:red;">Failed to load games.</p>';
+                console.error(err);
+            }
         }
 
         loadGames();

@@ -29,78 +29,7 @@ $trending = $conn->query("
         crossorigin="anonymous">
     <link rel="stylesheet" href="css/master.css">
 
-    <style>
-        .featuredGame {
-            position: relative;
-            min-height: 500px;
-            overflow: hidden;
-            border-radius: 20px;
-            background: #111;
-        }
 
-        .featuredGame::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(to right, rgba(0, 0, 0, 0.82) 20%, rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0.20) 100%),
-                url('<?php echo $featuredGame ? htmlspecialchars($featuredGame['cover_image']) : ''; ?>');
-            background-size: cover;
-            background-position: center;
-            transform: scale(1.08);
-            animation: featuredPan 12s ease-in-out infinite alternate;
-        }
-
-        .featuredGame .content {
-            position: relative;
-            z-index: 2;
-            max-width: 600px;
-        }
-
-        .featuredGame .featuredTag {
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .featuredDescription {
-            max-width: 520px;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        @keyframes featuredPan {
-            0% {
-                transform: scale(1.08) translateX(0) translateY(0);
-            }
-            100% {
-                transform: scale(1.14) translateX(-18px) translateY(-8px);
-            }
-        }
-
-        .trendingImg {
-            height: 260px;
-            object-fit: cover;
-        }
-
-        .gameCardLink {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .gameCardLink:hover {
-            color: inherit;
-        }
-
-        .card.h-100 {
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .card.h-100:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
-        }
-    </style>
 </head>
 
 <body class="d-flex flex-column">
@@ -110,6 +39,15 @@ $trending = $conn->query("
         <div class="container-fluid px-5">
             <?php if ($featuredGame): ?>
                 <div class="featuredGame text-white d-flex align-items-center px-5">
+                    <div class="featuredGame-bg"
+                        style="
+            background-image:
+            linear-gradient(to right, rgba(0,0,0,0.82) 20%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.20) 100%),
+            url('<?php echo htmlspecialchars($featuredGame['cover_image']); ?>');
+            background-size: cover;
+            background-position: center;
+        ">
+                    </div>
                     <div class="content">
                         <p class="featuredTag mb-2">Featured Game</p>
 
@@ -152,9 +90,6 @@ $trending = $conn->query("
                 <div class="col-md-8">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <p class="mb-0">Trending</p>
-                        <div>
-                            <a href="trending.php" class="text-decoration-none me-3 text-light">See all</a>
-                        </div>
                     </div>
 
                     <div class="row">

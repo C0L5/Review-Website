@@ -22,8 +22,11 @@ $avgRating = 0;
 $game = null;
 $isUpcomingApiGame = false;
 
+$igdb = new IgdbApi();
+
 if ($source === 'api') {
     $apiGame = getIgdbGameById($gameId);
+    $apiGame = $igdb->getGameById($gameId);
 
     if (!$apiGame) {
         die("Game not found");
@@ -103,6 +106,7 @@ if ($source === 'api') {
     $apiGame = null;
     if (!empty($dbGame['igdb_id'])) {
         $apiGame = getIgdbGameById($dbGame['igdb_id']);
+        $apiGame = $igdb->getGameById($dbGame['igdb_id']);
     }
 
     $developer = !empty($dbGame['developer']) ? $dbGame['developer'] : 'Unknown';
@@ -189,6 +193,7 @@ if ($source === 'api') {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($game['title']); ?></title>
@@ -196,6 +201,7 @@ if ($source === 'api') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/master.css">
 </head>
+
 <body class="d-flex flex-column">
 
 <?php include 'include/navigationBar.php' ?>

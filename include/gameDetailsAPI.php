@@ -1,8 +1,9 @@
 <?php
 header('Content-Type: application/json');
+require_once 'includeEnv.php';
 
-$client_id = "";
-$client_secret = "";
+$client_id = getenv('IGDB_CLIENT_ID') ?: '';
+$client_secret = getenv('IGDB_CLIENT_SECRET') ?: '';
 
 function getAccessToken($client_id, $client_secret)
 {
@@ -94,4 +95,3 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 echo $response;
-?>

@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 
-<!---For the navigation bar-->
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid my-2">
         <a class="navbar-brand" href="index.php">
@@ -25,12 +24,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <form class="d-flex px-lg-4 flex-grow-1" role="search" action="search.php" method="GET">
                 <input
-                class="form-control"
-                type="search"
-                placeholder="Search games..."
-                name="searchbar"
-                value="<?php echo isset($_GET['searchbar']) ? htmlspecialchars($_GET['searchbar']) : ''; ?>"
-                />
+                    class="form-control"
+                    type="search"
+                    placeholder="Search games..."
+                    name="searchbar"
+                    value="<?php echo isset($_GET['searchbar']) ? htmlspecialchars($_GET['searchbar']) : ''; ?>" />
             </form>
 
             <div class="d-flex pt-2 pt-lg-0 gap-2">
