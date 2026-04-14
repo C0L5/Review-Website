@@ -23,7 +23,7 @@ class GameModel
     public function getReviews($gameId)
     {
         $stmt = $this->conn->prepare("
-            SELECT r.*, u.username 
+            SELECT r.review_id, r.user_id, r.game_id, r.title, r.content, r.rating, r.created_at, u.username
             FROM reviews r
             JOIN users u ON r.user_id = u.user_id
             WHERE r.game_id = ?
