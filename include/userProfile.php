@@ -19,12 +19,27 @@ class ReviewObj
     public function getUserReviews($user_id)
     {
         $stmt = $this->conn->prepare("
-                SELECT r.title, r.content, r.rating, g.title AS game_title
+                SELECT r.title, r.content, r.rating, r.created_at, g.title AS game_title
                 FROM reviews r
                 JOIN games g ON r.game_id = g.game_id
                 WHERE r.user_id = ?
                 ORDER BY r.created_at DESC
             ");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function getUserLikes($user_id)
+    {
+        $stmt = $this->conn->prepare("
+        SELECT r.title, r.content, r.rating, r.created_at, g.title AS game_title
+        FROM review_likes rl
+        JOIN reviews r ON rl.review_id = r.review_id
+        JOIN games g ON r.game_id = g.game_id
+        WHERE rl.user_id = ?
+        ORDER BY r.created_at DESC
+    ");
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
         return $stmt->get_result();

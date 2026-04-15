@@ -261,66 +261,66 @@ if ($source === 'api') {
             <h4>Reviews</h4>
 
             <?php if ($reviews && $reviews->num_rows > 0): ?>
-            <?php while ($r = $reviews->fetch_assoc()): ?>
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-0"><?php echo htmlspecialchars($r['username']); ?></h6>
-                                <small class="text-muted">
-                                    <?php echo date("d M Y", strtotime($r['created_at'])); ?>
-                                </small>
-                            </div>
+                <?php while ($r = $reviews->fetch_assoc()): ?>
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <!-- Review Contents -->
+                                    <h6 class="mb-0"><?php echo htmlspecialchars($r['username']); ?></h6>
+                                    <p class="mt-2 mb-1">⭐ <?php echo $r['rating']; ?> / 5</p>
+                                    <strong><?php echo htmlspecialchars($r['title']); ?></strong>
+                                    <p><small class="text-muted"><?php echo date("d M Y", strtotime($r['created_at'])); ?></small></p>
+                                    <p class="mb-3"><?php echo htmlspecialchars($r['content']); ?></p>
 
-                            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $r['user_id']): ?>
-                                <div class="d-flex gap-2">
-                                    <a href="edit_review.php?id=<?php echo $r['review_id']; ?>&game_id=<?php echo $gameId; ?>"
-                                    class="btn btn-sm btn-outline-primary">
-                                        Edit
-                                    </a>
-
-                                    <form action="delete_review.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
-                                        <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
-                                        <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                    </form>
+                                    <!-- Like Button -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <?php if (isset($_SESSION['user_id'])): ?>
+                                            <?php if ((int)$r['user_liked'] === 1): ?>
+                                                <form action="unlike_review.php" method="POST" class="d-inline">
+                                                    <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
+                                                    <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
+                                                    <button type="submit" class="btn btn-sm btn-danger">♥ Liked</button>
+                                                </form>
+                                            <?php else: ?>
+                                                <form action="like_review.php" method="POST" class="d-inline">
+                                                    <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
+                                                    <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">♡ Like</button>
+                                                </form>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <a href="login.php" class="btn btn-sm btn-outline-secondary">Login to like</a>
+                                        <?php endif; ?>
+                                        <span class="text-muted">
+                                            <?php echo (int)$r['like_count']; ?> like<?php echo ((int)$r['like_count'] === 1 ? '' : 's'); ?>
+                                        </span>
+                                    </div>
                                 </div>
-                            <?php endif; ?>
-                        </div>
-
-                        <p class="mt-2 mb-1">⭐ <?php echo $r['rating']; ?> / 5</p>
-                        <strong><?php echo htmlspecialchars($r['title']); ?></strong>
-                        <p class="mb-3"><?php echo htmlspecialchars($r['content']); ?></p>
-
-                        <div class="d-flex align-items-center gap-2">
-                            <?php if (isset($_SESSION['user_id'])): ?>
-                                <?php if ((int)$r['user_liked'] === 1): ?>
-                                    <form action="unlike_review.php" method="POST" class="d-inline">
-                                        <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
-                                        <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
-                                        <button type="submit" class="btn btn-sm btn-danger">♥ Liked</button>
-                                    </form>
-                                <?php else: ?>
-                                    <form action="like_review.php" method="POST" class="d-inline">
-                                        <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
-                                        <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">♡ Like</button>
-                                    </form>
-                                <?php endif; ?>
-                            <?php else: ?>
-                                <a href="login.php" class="btn btn-sm btn-outline-secondary">Login to like</a>
-                            <?php endif; ?>
-
-                            <span class="text-muted">
-                                <?php echo (int)$r['like_count']; ?> like<?php echo ((int)$r['like_count'] === 1 ? '' : 's'); ?>
-                            </span>
+                                <div class="col-6 d-flex justify-content-end align-items-center">
+                                    <!-- Edit Delete Button -->
+                                    <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $r['user_id']): ?>
+                                        <div class="d-flex gap-2">
+                                            <a href="edit_review.php?id=<?php echo $r['review_id']; ?>&game_id=<?php echo $gameId; ?>"
+                                                class="btn btn-sm btn-outline-primary">
+                                                Edit
+                                            </a>
+                                            <form action="delete_review.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                                <input type="hidden" name="review_id" value="<?php echo $r['review_id']; ?>">
+                                                <input type="hidden" name="game_id" value="<?php echo $gameId; ?>">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>No reviews yet. Be the first!</p>
-        <?php endif; ?>
+
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No reviews yet. Be the first!</p>
+            <?php endif; ?>
         <?php endif; ?>
 
         <?php if ($source !== 'api' && isset($_SESSION['user_id'])): ?>
@@ -363,11 +363,11 @@ if ($source === 'api') {
                 This game has not been released yet, so reviews are not available.
             </div>
         <?php endif; ?>
-
     </div>
 
     <?php include 'include/footer.php' ?>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

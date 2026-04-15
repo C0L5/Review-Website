@@ -13,6 +13,7 @@ $reviewObj = new ReviewObj($conn);
 
 $user = $reviewObj->getUserData($user_id);
 $reviews = $reviewObj->getUserReviews($user_id);
+$reviewLikes = $reviewObj->getUserLikes($user_id);
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,22 +57,44 @@ $reviews = $reviewObj->getUserReviews($user_id);
             </div>
         </div>
         <!-- Tabs -->
-        <ul class="nav nav-tabs mt-3 mb-3">
-            <li class="nav-item"><a class="nav-link active">Reviews</a></li>
-
+        <ul class="nav nav-tabs mt-3 mb-3" id="profileTabs">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#reviewsTab">Reviews</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#likesTab">Likes</button>
+            </li>
         </ul>
-
-        <!-- Reviews -->
-        <?php while ($review = $reviews->fetch_assoc()): ?>
-            <div class="card mb-3 p-3 d-flex flex-row">
-                <div>
-                    <h5><?php echo htmlspecialchars($review['game_title']); ?></h5>
-                    <strong><?php echo htmlspecialchars($review['title']); ?></strong>
-                    <p>⭐ <?php echo $review['rating']; ?>/10</p>
-                    <p><?php echo htmlspecialchars($review['content']); ?></p>
-                </div>
+        <div class="tab-content">
+            <!-- Reviews -->
+            <div class="tab-pane fade show active" id="reviewsTab">
+                <?php while ($review = $reviews->fetch_assoc()): ?>
+                    <div class="card mb-3 p-3 d-flex flex-row">
+                        <div>
+                            <h5><?php echo htmlspecialchars($review['game_title']); ?></h5>
+                            <p>⭐ <?php echo $review['rating']; ?>/5</p>
+                            <strong><?php echo htmlspecialchars($review['title']); ?></strong>
+                            <p><small><?php echo htmlspecialchars($review['created_at']); ?></small></p>
+                            <p><?php echo htmlspecialchars($review['content']); ?></p>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
             </div>
-        <?php endwhile; ?>
+            <!-- Likes -->
+            <div class="tab-pane fade" id="likesTab">
+                <?php while ($reviewsLikes = $reviewLikes->fetch_assoc()): ?>
+                    <div class="card mb-3 p-3 d-flex flex-row">
+                        <div>
+                            <h5><?php echo htmlspecialchars($reviewsLikes['game_title']); ?></h5>
+                            <p>⭐ <?php echo $reviewsLikes['rating']; ?>/5</p>
+                            <strong><?php echo htmlspecialchars($reviewsLikes['title']); ?></strong>
+                            <p><small><?php echo htmlspecialchars($reviewsLikes['created_at']); ?></small></p>
+                            <p><?php echo htmlspecialchars($reviewsLikes['content']); ?></p>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </div>
 
     </div>
 

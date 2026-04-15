@@ -168,7 +168,7 @@ if (!empty($category) && !empty($rating)) {
                     <div>
                         <h2><?php echo htmlspecialchars($pageTitle); ?></h2>
                         <p class="text-muted mb-0">
-                            Explore games from your database and open each one to see full details.
+                            Explore a variety of games and open each one to see full details.
                         </p>
                     </div>
 
@@ -188,8 +188,8 @@ if (!empty($category) && !empty($rating)) {
                                     <div class="card gameCard shadow-sm">
 
                                         <img src="<?php echo htmlspecialchars($game['cover_image']); ?>"
-                                             class="img-fluid"
-                                             alt="<?php echo htmlspecialchars($game['title']); ?>">
+                                            class="img-fluid"
+                                            alt="<?php echo htmlspecialchars($game['title']); ?>">
 
                                         <div class="card-body">
                                             <h6 class="fw-bold mb-2">
