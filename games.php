@@ -175,9 +175,7 @@ if ($source === 'api') {
 
     $game = [
         'title' => !empty($dbGame['title']) ? $dbGame['title'] : ($apiGame['name'] ?? 'Untitled'),
-        'cover_image' => !empty($dbGame['cover_image'])
-            ? $dbGame['cover_image']
-            : (!empty($apiGame['cover']['url']) ? 'https:' . str_replace('t_thumb', 't_cover_big', $apiGame['cover']['url']) : ''),
+        'cover_image' => !empty($apiGame['cover']['url'] ?? null) ? 'https:' . str_replace('t_thumb', 't_cover_big', $apiGame['cover']['url']) : (!empty($dbGame['cover_image']) ? $dbGame['cover_image'] : ''),
         'developer' => $developer,
         'publisher' => $publisher,
         'description' => $description,
