@@ -10,7 +10,6 @@
 </head>
 
 <body class="d-flex flex-column">
-    <!-- Navigation Bar -->
     <?php include 'include/navigationBar.php' ?>
 
     <div class="container d-flex justify-content-center align-items-center flex-grow-1" style="max-width: 400px;">
@@ -18,10 +17,33 @@
 
             <h3 class="text-center mb-4">Login</h3>
 
+            <?php if (isset($_GET['error'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?php
+                    if ($_GET['error'] === 'invalid_password') {
+                        echo "Incorrect password.";
+                    } elseif ($_GET['error'] === 'user_not_found') {
+                        echo "No account found with that email.";
+                    } elseif ($_GET['error'] === 'empty_fields') {
+                        echo "Please fill in all fields.";
+                    } else {
+                        echo "Login failed. Please try again.";
+                    }
+                    ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+
             <form action="login_process.php" method="POST">
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Enter your email"
+                        value="<?php echo isset($_GET['email']) ? htmlspecialchars($_GET['email']) : ''; ?>"
+                        required>
                 </div>
 
                 <div class="mb-3">
@@ -53,11 +75,9 @@
         </div>
     </div>
 
-    <!--The footer-->
     <?php include 'include/footer.php' ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous">
-    </script>
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

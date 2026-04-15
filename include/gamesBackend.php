@@ -20,16 +20,30 @@ class GameModel
     }
 
     // Get reviews for a game
-    public function getReviews($gameId)
+    public function getReviews($gameId, $loggedUserId = null)
     {
-        $stmt = $this->conn->prepare("
-            SELECT r.review_id, r.user_id, r.game_id, r.title, r.content, r.rating, r.created_at, u.username
+        $sql = "
+            SELECT
+                r.review_id,
+                r.user_id,
+                r.game_id,
+                r.title,
+                r.content,
+                r.rating,
+                r.created_at,
+                u.username,
+                COUNT(rl.user_id) AS like_count,
+                MAX(CASE WHEN rl.user_id = ? THEN 1 ELSE 0 END) AS user_liked
             FROM reviews r
             JOIN users u ON r.user_id = u.user_id
+            LEFT JOIN review_likes rl ON r.review_id = rl.review_id
             WHERE r.game_id = ?
+            GROUP BY r.review_id, r.user_id, r.game_id, r.title, r.content, r.rating, r.created_at, u.username
             ORDER BY r.created_at DESC
-        ");
-        $stmt->bind_param("i", $gameId);
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $loggedUserId, $gameId);
         $stmt->execute();
         return $stmt->get_result();
     }
