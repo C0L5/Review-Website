@@ -197,7 +197,7 @@ $reviews = $conn->query("
 
                 document.getElementById(target).classList.remove('d-none');
 
-                document.querySelectorAll('.nav-link').forEach(l => {
+                document.querySelectorAll('.sideBarLink').forEach(l => {
                     l.classList.remove('active');
                 });
 
