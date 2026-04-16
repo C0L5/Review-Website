@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("ssssssi", $title, $description, $release_date, $developer, $publisher, $cover_image, $igdb_id);
     $stmt->execute();
 
-    header("Location: games.php");
+    header("Location: dashboard.php");
     exit();
 }
 ?>

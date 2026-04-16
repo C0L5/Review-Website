@@ -6,8 +6,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid my-2">
-        <a class="navbar-brand" href="/ReviewWebsite/index.php">
-            <img src="/ReviewWebsite/images/reviewLogoNav.png" alt="LOGO" class="img-fluid px-3" style="height:70px; width:auto;">
+        <a class="navbar-brand" href="/index.php">
+            <img src="/images/reviewLogoNav.png" alt="LOGO" class="img-fluid px-3" style="height:70px; width:auto;">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
@@ -17,9 +17,9 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
             <div class="navbar-nav" style="font-size: 1.2rem;">
-                <a class="nav-link" href="/ReviewWebsite/index.php">Home</a>
-                <a class="nav-link" href="/ReviewWebsite/reviews.php">Reviews</a>
-                <a class="nav-link" href="/ReviewWebsite/upcomingGames.php">Upcoming Games</a>
+                <a class="nav-link" href="/index.php">Home</a>
+                <a class="nav-link" href="/reviews.php">Reviews</a>
+                <a class="nav-link" href="/upcomingGames.php">Upcoming Games</a>
             </div>
 
             <form class="d-flex px-lg-4 flex-grow-1" role="search" action="search.php" method="GET">
@@ -38,16 +38,16 @@ if (session_status() === PHP_SESSION_NONE) {
                         <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="text-white">
                                 <img
-                                    src="<?php echo !empty($_SESSION['profile_picture']) ? '/ReviewWebsite/uploads/' . $_SESSION['profile_picture'] : '/ReviewWebsite/images/default-avatar.png'; ?>"
+                                    src="<?php echo !empty($_SESSION['profile_picture']) ? '/ReviewWebsite/uploads/' . $_SESSION['profile_picture'] : '/images/default-avatar.png'; ?>"
                                     class="rounded-circle border border-white me-2"
                                     style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
                                 <?php echo htmlspecialchars($_SESSION['username']); ?>
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg-end mt-md-3">
-                            <li><a class="dropdown-item" href="/ReviewWebsite/profile.php">Profile</a></li>
+                            <li><a class="dropdown-item" href="/profile.php">Profile</a></li>
                             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                                <li><a class="dropdown-item" href="/ReviewWebsite/admin/dashboard.php">Admin Panel</a></li>
+                                <li><a class="dropdown-item" href="/admin/dashboard.php">Admin Panel</a></li>
                             <?php endif; ?>
                             <li>
                                 <hr class="dropdown-divider">

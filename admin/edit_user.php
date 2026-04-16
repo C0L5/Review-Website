@@ -4,7 +4,7 @@ include '../db.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
-    header("Location: users.php");
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssi", $username, $email, $role, $id);
     $stmt->execute();
 
-    header("Location: users.php");
+    header("Location: dashboard.php");
     exit();
 }
 ?>

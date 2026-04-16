@@ -4,7 +4,7 @@ include '../db.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
-    header("Location: games.php");
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -12,5 +12,5 @@ $stmt = $conn->prepare("DELETE FROM games WHERE game_id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
-header("Location: games.php");
+header("Location: dashboard.php");
 exit();

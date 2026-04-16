@@ -106,7 +106,7 @@ $isInWishlist = true;
                     <div class="card mb-3 p-3 d-flex flex-row">
                         <div class="card-body p-0">
                             <div class="row align-items-center g-3">
-                                <div class="col-md-3"><img src="/ReviewWebsite/<?php echo htmlspecialchars($wish['cover_image']); ?>" class="img-fluid wishlist-img"></div>
+                                <div class="col-md-3"><img src="/<?php echo htmlspecialchars($wish['cover_image']); ?>" class="img-fluid wishlist-img"></div>
                                 <div class="col-md-7">
                                     <h5><?php echo htmlspecialchars($wish['title']); ?></h5>
                                     <strong><?php echo htmlspecialchars($wish['developer']); ?></strong>

@@ -4,7 +4,7 @@ include '../db.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
-    header("Location: games.php");
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("ssssssii", $title, $description, $release_date, $developer, $publisher, $cover_image, $igdb_id, $id);
     $stmt->execute();
 
-    header("Location: games.php");
+    header("Location: dashboard.php");
     exit();
 }
 ?>

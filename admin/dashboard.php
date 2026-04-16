@@ -31,7 +31,7 @@ $reviews = $conn->query("
     <?php include '../include/navigationBar.php' ?>
 
     <div class="container my-5">
-        <h2 class="mb-4">Admin Dashboard</h2>
+        <h2 class="mb-4 text-white">Admin Dashboard</h2>
 
         <div class="row g-2">
             <div class="col-4">
@@ -66,7 +66,7 @@ $reviews = $conn->query("
             <!-- SIDEBAR -->
             <div class="col-md-3 sidebar p-3">
                 <div class="collapse d-md-block" id="sideBarMenu">
-                    <h5>Menu</h5>
+                    <h5 class="mb-4 text-white">Menu</h5>
                     <a class="sideBarLink active" data-target="games">Games</a>
                     <a class="sideBarLink" data-target="users">Users</a>
                     <a class="sideBarLink" data-target="reviews">Reviews</a>
@@ -78,7 +78,7 @@ $reviews = $conn->query("
 
                 <div id="games" class="content-section">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2>Manage Games</h2>
+                        <h2 class="mb-4 text-white">Manage Games</h2>
                         <a href="add_game.php" class="btn btn-success">Add Game</a>
                     </div>
                     <div class="table-responsive">
@@ -114,7 +114,7 @@ $reviews = $conn->query("
 
                 <div id="users" class="content-section d-none">
 
-                    <h2 class="mb-4">Manage Users</h2>
+                    <h2 class="mb-4 text-white">Manage Users</h2>
                     <div class="table-responsive">
                         <table class="table table-dark table-striped">
                             <thead>
@@ -147,7 +147,7 @@ $reviews = $conn->query("
                 </div>
 
                 <div id="reviews" class="content-section d-none">
-                    <h2 class="mb-4">Manage Reviews</h2>
+                    <h2 class="mb-4 text-white">Manage Reviews</h2>
                     <div class="table-responsive">
                         <table class="table table-dark table-striped">
                             <thead>
