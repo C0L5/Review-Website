@@ -36,40 +36,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include '../include/navigationBar.php'; ?>
 
     <div class="container my-5" style="max-width: 800px;">
-        <h2 class="mb-4">Add Game</h2>
+        <h2 class="mb-4 text-white">Add Game</h2>
 
         <form method="POST">
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Title</label>
                 <input type="text" name="title" class="form-control" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Description</label>
                 <textarea name="description" class="form-control" rows="4" required></textarea>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Release Date</label>
                 <input type="date" name="release_date" class="form-control" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Developer</label>
                 <input type="text" name="developer" class="form-control" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Publisher</label>
                 <input type="text" name="publisher" class="form-control" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Cover Image Path</label>
                 <input type="text" name="cover_image" class="form-control" placeholder="images/games/example.jpg" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>IGDB ID</label>
                 <input type="number" name="igdb_id" class="form-control">
             </div>

@@ -44,20 +44,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include '../include/navigationBar.php'; ?>
 
     <div class="container my-5" style="max-width: 700px;">
-        <h2 class="mb-4">Edit User</h2>
+        <h2 class="mb-4 text-white">Edit User</h2>
 
         <form method="POST">
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" value="<?php echo htmlspecialchars($user['username']); ?>" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Email</label>
                 <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 text-white">
                 <label>Role</label>
                 <select name="role" class="form-control">
                     <option value="user" <?php echo $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
