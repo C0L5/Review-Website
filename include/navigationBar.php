@@ -47,7 +47,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <ul class="dropdown-menu dropdown-menu-lg-end mt-md-3">
                             <li><a class="dropdown-item" href="/ReviewWebsite/profile.php">Profile</a></li>
                             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                                <li><a class="dropdown-item" href="admin/dashboard.php">Admin Panel</a></li>
+                                <li><a class="dropdown-item" href="/ReviewWebsite/admin/dashboard.php">Admin Panel</a></li>
                             <?php endif; ?>
                             <li>
                                 <hr class="dropdown-divider">

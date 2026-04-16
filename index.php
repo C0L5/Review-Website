@@ -123,28 +123,22 @@ $trending = $conn->query("
 
                 <!-- Discover Grid -->
                 <div class="col-md-4">
-                    <p>Discover</p>
+                    <p>Gaming Platforms</p>
                     <div class="row">
                         <div class="col">
-                            <a href="#">
-                                <div class="card card-discover">
-                                    <img src="images/playstationLogo.svg" class="img-fluid brandLogo" alt="PlayStation">
-                                </div>
-                            </a>
+                            <div class="card card-discover">
+                                <img src="images/playstationLogo.svg" class="img-fluid brandLogo" alt="PlayStation">
+                            </div>
                         </div>
                         <div class="col">
-                            <a href="#">
-                                <div class="card card-discover">
-                                    <img src="images/nintendoSwitchLogo.svg" class="img-fluid brandLogo" alt="Nintendo Switch">
-                                </div>
-                            </a>
+                            <div class="card card-discover">
+                                <img src="images/nintendoSwitchLogo.svg" class="img-fluid brandLogo" alt="Nintendo Switch">
+                            </div>
                         </div>
                         <div class="col">
-                            <a href="#">
-                                <div class="card card-discover">
-                                    <img src="images/steamLogo.svg" class="img-fluid brandLogo" alt="Steam">
-                                </div>
-                            </a>
+                            <div class="card card-discover">
+                                <img src="images/steamLogo.svg" class="img-fluid brandLogo" alt="Steam">
+                            </div>
                         </div>
                     </div>
                 </div>

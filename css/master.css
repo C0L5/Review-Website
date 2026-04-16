@@ -67,6 +67,30 @@ a{
   object-fit: cover;   
   border-radius: 5px;  
 }
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.collapsed .link-text {
+    display: none;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.sidebar a:hover {
+    background: #f5f5f5;
+}
+
+.sidebar a.active {
+    background: #e9ecef;
+    font-weight: bold;
+}
 
 @keyframes featuredPan {
     0% {
