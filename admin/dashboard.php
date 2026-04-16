@@ -28,7 +28,7 @@ $reviews = $conn->query("
 </head>
 
 <body class="d-flex flex-column">
-    <?php include '../include/navigationBar.php'; ?>
+    <?php include '../include/navigationBar.php' ?>
 
     <div class="container my-5">
         <h2 class="mb-4">Admin Dashboard</h2>
@@ -67,9 +67,9 @@ $reviews = $conn->query("
             <div class="col-md-3 sidebar p-3">
                 <div class="collapse d-md-block" id="sideBarMenu">
                     <h5>Menu</h5>
-                    <a class="nav-link active" data-target="games">Games</a>
-                    <a class="nav-link" data-target="users">Users</a>
-                    <a class="nav-link" data-target="reviews">Reviews</a>
+                    <a class="sideBarLink active" data-target="games">Games</a>
+                    <a class="sideBarLink" data-target="users">Users</a>
+                    <a class="sideBarLink" data-target="reviews">Reviews</a>
                 </div>
             </div>
 
@@ -185,7 +185,7 @@ $reviews = $conn->query("
     </div>
     <?php include '../include/footer.php' ?>
     <script>
-        document.querySelectorAll('.nav-link').forEach(link => {
+        document.querySelectorAll('.sideBarLink').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
 
