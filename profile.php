@@ -14,6 +14,9 @@ $reviewObj = new ReviewObj($conn);
 $user = $reviewObj->getUserData($user_id);
 $reviews = $reviewObj->getUserReviews($user_id);
 $reviewLikes = $reviewObj->getUserLikes($user_id);
+$wishList = $reviewObj->getUserWishList($user_id);
+
+$isInWishlist = true;
 ?>
 <!DOCTYPE html>
 <html>
@@ -64,6 +67,9 @@ $reviewLikes = $reviewObj->getUserLikes($user_id);
             <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#likesTab">Likes</button>
             </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#wishListTab">Wishlist</button>
+            </li>
         </ul>
         <div class="tab-content">
             <!-- Reviews -->
@@ -72,9 +78,9 @@ $reviewLikes = $reviewObj->getUserLikes($user_id);
                     <div class="card mb-3 p-3 d-flex flex-row">
                         <div>
                             <h5><?php echo htmlspecialchars($review['game_title']); ?></h5>
-                            <p>⭐ <?php echo $review['rating']; ?>/5</p>
-                            <strong><?php echo htmlspecialchars($review['title']); ?></strong>
-                            <p><small><?php echo htmlspecialchars($review['created_at']); ?></small></p>
+                            <p class="mb-1">⭐ <?php echo $review['rating']; ?>/5</p>
+                            <p class="mb-1"><strong><?php echo htmlspecialchars($review['title']); ?></strong></p>
+                            <p class="mb-4"><small><?php echo htmlspecialchars($review['created_at']); ?></small></p>
                             <p><?php echo htmlspecialchars($review['content']); ?></p>
                         </div>
                     </div>
@@ -86,10 +92,37 @@ $reviewLikes = $reviewObj->getUserLikes($user_id);
                     <div class="card mb-3 p-3 d-flex flex-row">
                         <div>
                             <h5><?php echo htmlspecialchars($reviewsLikes['game_title']); ?></h5>
-                            <p>⭐ <?php echo $reviewsLikes['rating']; ?>/5</p>
-                            <strong><?php echo htmlspecialchars($reviewsLikes['title']); ?></strong>
-                            <p><small><?php echo htmlspecialchars($reviewsLikes['created_at']); ?></small></p>
+                            <p class="mb-1">⭐ <?php echo $reviewsLikes['rating']; ?>/5</p>
+                            <p class="mb-1"><strong><?php echo htmlspecialchars($reviewsLikes['title']); ?></strong></p>
+                            <p class="mb-4"><small><?php echo htmlspecialchars($reviewsLikes['created_at']); ?></small></p>
                             <p><?php echo htmlspecialchars($reviewsLikes['content']); ?></p>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+            <!-- Wishlist -->
+            <div class="tab-pane fade" id="wishListTab">
+                <?php while ($wish = $wishList->fetch_assoc()): ?>
+                    <div class="card mb-3 p-3 d-flex flex-row">
+                        <div class="card-body p-0">
+                            <div class="row align-items-center g-3">
+                                <div class="col-md-3"><img src="/ReviewWebsite/<?php echo htmlspecialchars($wish['cover_image']); ?>" class="img-fluid wishlist-img"></div>
+                                <div class="col-md-7">
+                                    <h5><?php echo htmlspecialchars($wish['title']); ?></h5>
+                                    <strong><?php echo htmlspecialchars($wish['developer']); ?></strong>
+                                </div>
+                                <div class="col-md-2 d-flex md-justify-content-end">
+                                    <?php if ($isInWishlist): ?>
+                                        <form action="remove_from_wishlist.php" method="POST">
+                                            <input type="hidden" name="redirect_url" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                                            <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($wish['game_id']); ?>">
+                                            <button type="submit" class="btn btn-danger w-100">
+                                                ♥ Remove from Wishlist
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <?php endwhile; ?>

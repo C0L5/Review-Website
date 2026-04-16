@@ -220,35 +220,35 @@ if ($source === 'api') {
     <div class="container my-5">
         <div class="row g-4">
             <div class="col-md-4">
-            <?php if (!empty($game['cover_image'])): ?>
-            <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" class="img-fluid rounded shadow-sm mb-3" alt="<?php echo htmlspecialchars($game['title']); ?>">
-            <?php else: ?>
-            <div class="bg-secondary text-white p-5 rounded text-center mb-3">No image available</div>
-            <?php endif; ?>
-
-            <?php if ($source !== 'api'): ?>
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <?php if ($isInWishlist): ?>
-                    <form action="remove_from_wishlist.php" method="POST">
-                        <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($gameId); ?>">
-                        <button type="submit" class="btn btn-danger w-100">
-                            ♥ Remove from Wishlist
-                        </button>
-                    </form>
-                    <?php else: ?>
-                    <form action="add_to_wishlist.php" method="POST">
-                        <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($gameId); ?>">
-                        <button type="submit" class="btn btn-outline-danger w-100">
-                            ♡ Add to Wishlist
-                        </button>
-                    </form>
+                <?php if (!empty($game['cover_image'])): ?>
+                    <img src="<?php echo htmlspecialchars($game['cover_image']); ?>" class="img-fluid rounded shadow-sm mb-3" alt="<?php echo htmlspecialchars($game['title']); ?>">
+                <?php else: ?>
+                    <div class="bg-secondary text-white p-5 rounded text-center mb-3">No image available</div>
                 <?php endif; ?>
-            <?php else: ?>
-                <a href="login.php" class="btn btn-outline-secondary w-100">
-                    Login to add to Wishlist
-                </a>
-             <?php endif; ?>
-             <?php endif; ?>
+
+                <?php if ($source !== 'api'): ?>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <?php if ($isInWishlist): ?>
+                            <form action="remove_from_wishlist.php" method="POST">
+                                <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($gameId); ?>">
+                                <button type="submit" class="btn btn-danger w-100">
+                                    ♥ Remove from Wishlist
+                                </button>
+                            </form>
+                        <?php else: ?>
+                            <form action="add_to_wishlist.php" method="POST">
+                                <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($gameId); ?>">
+                                <button type="submit" class="btn btn-outline-danger w-100">
+                                    ♡ Add to Wishlist
+                                </button>
+                            </form>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <a href="login.php" class="btn btn-outline-secondary w-100">
+                            Login to add to Wishlist
+                        </a>
+                    <?php endif; ?>
+                <?php endif; ?>
             </div>
 
             <div class="col-md-8">
@@ -306,8 +306,8 @@ if ($source === 'api') {
                                     <!-- Review Contents -->
                                     <h6 class="mb-0"><?php echo htmlspecialchars($r['username']); ?></h6>
                                     <p class="mt-2 mb-1">⭐ <?php echo $r['rating']; ?> / 5</p>
-                                    <strong><?php echo htmlspecialchars($r['title']); ?></strong>
-                                    <p><small class="text-muted"><?php echo date("d M Y", strtotime($r['created_at'])); ?></small></p>
+                                    <p class="mb-1"><strong><?php echo htmlspecialchars($r['title']); ?></strong></p>
+                                    <p class="mb-4"><small class="text-muted"><?php echo date("d M Y", strtotime($r['created_at'])); ?></small></p>
                                     <p class="mb-3"><?php echo htmlspecialchars($r['content']); ?></p>
 
                                     <!-- Like Button -->

@@ -145,7 +145,7 @@ if (!empty($category) && !empty($rating)) {
                             <select name="category" class="form-select">
                                 <option value="">Any</option>
                                 <?php
-                                $categories = ["Action", "RPG", "FPS", "Adventure", "Horror", "Open World", "Racing", "Simulation", "Sports", "Strategy"];
+                                $categories = ["Action", "RPG", "FPS", "Adventure", "Horror", "Open World", "Racing", "Simulation", "Sports", "Strategy", "MOBA"];
                                 foreach ($categories as $cat) {
                                     $selected = (!empty($_GET['category']) && $_GET['category'] === $cat) ? 'selected' : '';
                                     echo "<option value='" . htmlspecialchars($cat) . "' $selected>" . htmlspecialchars($cat) . "</option>";

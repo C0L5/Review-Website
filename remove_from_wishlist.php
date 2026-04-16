@@ -29,5 +29,6 @@ $stmt = $conn->prepare("
 $stmt->bind_param("ii", $userId, $gameId);
 $stmt->execute();
 
-header("Location: games.php?id=" . $gameId);
+$redirect = $_POST['redirect_url'] ?? 'index.php';
+header("Location: " . $redirect);
 exit();

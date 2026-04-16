@@ -44,4 +44,16 @@ class ReviewObj
         $stmt->execute();
         return $stmt->get_result();
     }
+
+    public function getUserWishList($user_id)
+    {
+        $stmt = $this->conn->prepare("SELECT g.title, g.cover_image, g.game_id, g.developer
+                                    FROM user_favorites uf
+                                    JOIN games g ON uf.game_id = g.game_id
+                                    JOIN users u ON uf.user_id = u.user_id
+                                    WHERE uf.user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
